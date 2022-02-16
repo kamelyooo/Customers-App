@@ -15,9 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-
     var repo: MainRepo
-
 ) : ViewModel() {
     private var errorMsg = ""
     private val isSignUpSuccess = MutableLiveData<Boolean>()

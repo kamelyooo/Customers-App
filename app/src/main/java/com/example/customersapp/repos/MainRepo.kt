@@ -25,5 +25,6 @@ class MainRepo @Inject constructor(
             Editor.apply()
         }
     }
+    fun getUserData(userId:String)= UserRef.document(userId)
 
 }

@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.example.customersapp.R
 import com.example.customersapp.databinding.SignUpFragmentBinding
 import com.example.customersapp.viewModels.SignUpViewModel
@@ -27,8 +28,7 @@ class SignUpFragment : Fragment() {
 
     private val viewModel: SignUpViewModel by viewModels()
 
-    @Inject
-    lateinit var userTimeAdded:String
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,14 +37,17 @@ class SignUpFragment : Fragment() {
         _binding = SignUpFragmentBinding.inflate(inflater, container, false)
         val root: View = binding.root
         binding.SingUpBtn.setOnClickListener {
-            showProgressBar()
-            viewModel.  sighUpUser(binding.EmailET.text.toString(),binding.PassWordET.text.toString(),
-                getCurrentTime(),binding.NameET.text.toString())
+            if (checkFields()){
+                showProgressBar()
+                viewModel.  sighUpUser(binding.EmailET.text.toString(),binding.PassWordET.text.toString(),
+                    getCurrentTime(),binding.NameET.text.toString())
+            }
+
         }
 
         viewModel.isSignUpSuccess().observe(viewLifecycleOwner, Observer { success->
             if (success){
-//                navigateToHomeFrg()
+                navigateToHomeFrg()
                 hideProgressBar()
             }else {
                 hideProgressBar()
@@ -52,10 +55,37 @@ class SignUpFragment : Fragment() {
             }
 
         })
+        binding.logInTv.setOnClickListener {
+            findNavController().navigate(R.id.action_signUpFragment_to_logInFragment)
+        }
         return root
 
     }
+    private fun checkFields(): Boolean {
+        val email = binding.EmailET.text.toString()
+        val pass = binding.PassWordET.text.toString()
+        val name = binding.NameET.text.toString()
+        if (binding.EmailET.text.toString() == "" || binding.EmailET.text.toString()
+                .isEmpty()
+        )
+            binding.textInputEmail.error = "Enter Email"
+        if (binding.PassWordET.text.toString() == "" || binding.PassWordET.text.toString()
+                .isEmpty()
+        )
+            binding.textInputPass.error = "Enter Password"
 
+        if (binding.NameET.text.toString() == "" || binding.NameET.text.toString()
+                .isEmpty()
+        )
+            binding.textInputName.error = "Enter Name"
+
+        return !(email.isEmpty() || pass.isEmpty()||name.isEmpty())
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
     private fun getCurrentTime():String{
         val timeInMillis = Calendar.getInstance().timeInMillis
         val dateFormat = SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault())
@@ -70,5 +100,7 @@ class SignUpFragment : Fragment() {
         binding.progressBarLoading.visibility=View.GONE
         binding.SingUpBtn.isEnabled=true
     }
-
+    private fun navigateToHomeFrg() {
+        findNavController().navigate(R.id.action_signUpFragment_to_homeFragment)
+    }
 }

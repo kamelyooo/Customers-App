@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.findNavController()
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.signUpFragment
+                R.id.signUpFragment,R.id.logInFragment,R.id.homeFragment
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
