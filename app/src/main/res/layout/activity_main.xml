@@ -17,7 +17,6 @@
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:background="@color/design_default_color_primary"
             android:layout_height="match_parent">
 
             <com.google.android.material.textview.MaterialTextView

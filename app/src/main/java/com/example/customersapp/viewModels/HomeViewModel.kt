@@ -1,9 +1,11 @@
 package com.example.customersapp.viewModels
 
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.customersapp.Utils.Constants.KEY_TIME
 import com.example.customersapp.pojo.User
 import com.example.customersapp.repos.MainRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,15 +15,12 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     var repo: MainRepo,
-    var timeAdded: String
+    var sharedPreferences: SharedPreferences
 ) : ViewModel() {
-
-
     private var usersList=MutableLiveData<List<User>>()
     fun getAllUsers()=viewModelScope.launch(Dispatchers.IO) {
-        Log.i("xxxTimeAdded",timeAdded)
         repo.getAllUsers().orderBy("userTimeAdded")
-            .whereGreaterThan("userTimeAdded",timeAdded).addSnapshotListener { value, error ->
+            .whereGreaterThan("userTimeAdded",sharedPreferences.getString(KEY_TIME,"").toString()).addSnapshotListener { value, error ->
             error?.let {
                 return@let
             }
