@@ -27,4 +27,6 @@ class MainRepo @Inject constructor(
     }
     fun getUserData(userId:String)= UserRef.document(userId)
 
+    fun getAllUsers()=UserRef
+
 }
