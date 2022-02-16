@@ -3,6 +3,11 @@ package com.example.customersapp.di
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
+import com.example.customersapp.Utils.Constants.KEY_TIME
+import com.example.customersapp.Utils.Constants.SHARED_PREF_NAME
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 import dagger.Module
 import dagger.Provides
@@ -19,18 +24,17 @@ object AppModule {
 
 
 
-//    @Provides
-//    @Singleton
-//    fun provideSharedPref(
-//        @ApplicationContext app:Context
-//    )=app.getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE)
-//
-//    @Provides
-//    @Singleton
-//    @Named("UserName")
-//    fun ProvideName(
-//        sharedPref:SharedPreferences
-//    )=sharedPref.getString(KEY_NAME,"")?:""
+    @Provides
+    @Singleton
+    fun provideSharedPref(
+        @ApplicationContext app:Context
+    )=app.getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE)
+
+    @Provides
+    @Singleton
+    fun ProvideName(
+        sharedPref:SharedPreferences
+    )=sharedPref.getString(KEY_TIME,"")?:""
 //    @Provides
 //    @Singleton
 //    @Named("UserImage")
@@ -52,25 +56,13 @@ object AppModule {
 ////        sharedPref:SharedPreferences
 ////    )=sharedPref.getBoolean(KEY_FIRST_TIME_TOGGLE,true)
 //
-//    @Provides
-//    @Singleton
-//    fun provideFireBaseAuth()= FirebaseAuth.getInstance()
-//
-//    @Provides
-//    @Singleton
-//    @Named("UserCollection")
-//    fun provideFireBaseStoreUser()= Firebase.firestore.collection("Users")
-//    @Provides
-//    @Singleton
-//    @Named("RidesCollection")
-//    fun provideFireBaseRids()= Firebase.firestore.collection("Rides")
-//
-//    @Provides
-//    @Singleton
-//    fun provideFireBaseImageStorage() = FirebaseStorage.getInstance().reference
-//
-//
-//    @Provides
-//    @Singleton
-//    fun provideFireBaseDataBase() = FirebaseDatabase.getInstance().reference.child("supports")
+    @Provides
+    @Singleton
+    fun provideFireBaseAuth()= FirebaseAuth.getInstance()
+
+    @Provides
+    @Singleton
+    @Named("UserCollection")
+    fun provideFireBaseStoreUser()= Firebase.firestore.collection("Users")
+
 }
